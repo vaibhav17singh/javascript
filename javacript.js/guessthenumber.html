@@ -1,0 +1,144 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> DOM LEARNING</title>
+    <style>
+        .bg-black{
+            background-color: #212121;
+            color : #fff;
+        }
+    </style>
+</head>
+<body class = "bg-black">
+    <div>
+       <h1 id = "title" class = "heading">DOM LEARNING ON YT</h1>
+       <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Enim, eius!</p>
+    </div>
+</body>
+</html> -->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number Game</title>
+    <style>
+         
+        
+    
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        .game-container {
+            text-align: center;
+            background: white;
+            padding: 100px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="number"] {
+            padding: 10px 20px;
+            margin: 10px;
+            width: 80%;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 20px 40px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: black;
+            color:white
+        }
+
+        p {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body class = "bg- black">
+    <div class="game-container">
+        <h1>Guess the Number</h1>
+        <p>Guess the number between 1 and 100.</p>
+        <input type="number" id="userGuess" placeholder="Enter your guess">
+        <button onclick="checkGuess()">Submit Guess</button>
+        <button onclick="restartGame()" id="restartButton" style="display: none;">Restart Game</button>
+        <p id="message"></p>
+        <p id="score"></p>
+        <p id="chances"></p>
+    </div>
+    <script>
+        let targetNumber;
+        let attempts;
+        let maxAttempts = 10;
+        let score;
+
+        function initializeGame() {
+            targetNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            score = 100;
+            document.getElementById('message').textContent = '';
+            document.getElementById('score').textContent = '';
+            document.getElementById('chances').textContent = '';
+            document.getElementById('userGuess').value = '';
+            document.getElementById('restartButton').style.display = 'none';
+        }
+
+        function checkGuess() {
+            const userGuess = document.getElementById('userGuess').value;
+            const messageElement = document.getElementById('message');
+            const scoreElement = document.getElementById('score');
+            const chancesElement = document.getElementById('chances');
+
+            if (userGuess === '') {
+                messageElement.textContent = 'Please enter a number.';
+                return;
+            }
+
+            attempts++;
+            const guess = parseInt(userGuess);
+
+            if (guess < targetNumber) {
+                messageElement.textContent = 'The number is higher than ' + guess + '.';
+            } else if (guess > targetNumber) {
+                messageElement.textContent = 'The number is lower than ' + guess + '.';
+            } else {
+                messageElement.textContent = 'Correct! The number was ' + targetNumber + '.';
+                scoreElement.textContent = 'Your score is: ' + score;
+                document.getElementById('restartButton').style.display = 'block';
+                return;
+            }
+
+            score -= 10;
+            chancesElement.textContent = 'Attempts remaining: ' + (maxAttempts - attempts);
+            scoreElement.textContent = 'Your score is: ' + score;
+
+            if (attempts >= maxAttempts) {
+                messageElement.textContent = 'Game over! The number was ' + targetNumber + '.';
+                scoreElement.textContent = 'Your score is: ' + score;
+                document.getElementById('restartButton').style.display = 'block';
+            }
+        }
+
+        function restartGame() {
+            initializeGame();
+        }
+
+        initializeGame();
+    </script>
+</body>
+</html>
